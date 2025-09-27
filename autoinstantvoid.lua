@@ -24,22 +24,22 @@ print("- Creating Variables.")
 
 local animationID = {
     ["rbxassetid://12273188754"] = {
-        Delay = 1.3,
+        Delay = 1.305,
     },
     ["rbxassetid://12296113986"] = {
-        Delay = 1.2,
+        Delay = 1.23,
     },
 }
 
 local oldCFrame
 local isTeleporting = false
 
-local function teleportVoid(rootpart: HumanoidRootPart)
+local function teleportVoid(rootpart)
     if isTeleporting then return end
     isTeleporting = true
 
     oldCFrame = rootpart.CFrame
-    rootpart.CFrame = CFrame.new(oldCFrame.Position.X, -300, oldCFrame.Position.Z)
+    rootpart.CFrame = CFrame.new(oldCFrame.Position.X, -300, oldCFrame.Position.Z) -- teleport on underground
 
     StarterGui:SetCore("SendNotification", {
         Title = "INFO",
@@ -47,7 +47,7 @@ local function teleportVoid(rootpart: HumanoidRootPart)
         Duration = 3,
     })
 
-    task.wait(0.4)
+    task.wait(1)
 
     rootpart.CFrame = oldCFrame
     oldCFrame = nil
@@ -60,7 +60,7 @@ local function teleportVoid(rootpart: HumanoidRootPart)
     })
 end
 
-local function setupCharacter(char: Character)
+local function setupCharacter(char)
     local rootpart = char:WaitForChild("HumanoidRootPart")
     local humanoid = char:WaitForChild("Humanoid")
     local animator = humanoid:WaitForChild("Animator")
@@ -74,7 +74,7 @@ local function setupCharacter(char: Character)
 end
 
 setupCharacter(localPlayer.Character or localPlayer.CharacterAdded:Wait())
-localPlayer.CharacterAdded:Connect(function(newChar: Character)
+localPlayer.CharacterAdded:Connect(function(newChar)
     StarterGui:SetCore("SendNotification", {
         Title = "INFO",
         Text = "Respawing...",
